@@ -1,0 +1,65 @@
+mkdir abhilasha 
+cd abhilasha 
+#Question one
+vim Dockefile
+FROM alpine
+maintainer abhilasha
+CMD date -u +"%H:%M:%S"
+##Created image 
+docker build -t alpine:abhilasha
+
+#creating a container of the alpine image
+docker run -d --name abhilashac1q1 alpine:abhilasha 
+
+# Saving the output
+docker logs -f abhilashac1q1 > question1.txt
+
+# Question 2
+# CLone the git repo in any directory 
+git clone  https://github.com/redashu/summer2020dockertest.git
+# probably, a directory oof this name summer2020dockertest gets created
+# Now go in that directory you'll fing a dockerfile, run it to create an image 
+docker build -t adhoc:abhilasha .
+# now login to your docker, the syntax is 
+docker login -u <userid> -p <password>
+#Create a repository beforehand by anyname and then follow the syntax to push your image
+docker tag <imageid> <userid>/<reponame>:abhilasha
+docker push <userid>/<reponame> 
+# here my userid is 91169 and reponame is adhoctestone
+# congrats your image is uploaded to you docker hub
+
+#Question3
+docker pull dockerashu/ckad:v2
+docker run -d --name abhilashac3q3 -p 3333:80 dockerashu/ckad:v2
+# access the webpage using the folllowing link
+http://52.204.127.145:3333/
+# there are 14 times docker 
+
+#Question4
+# clone the git link inside a directory
+git clone https://github.com/redashu/beginner-html-site-styled.git 
+# renaming 
+mv beginner-html-site-styled.git webapp1
+# crate a docker file in the same directory
+vim Dockerfile
+~FROM centos
+~maintainer abhilasha 
+~RUN  yum install -y httpd
+~COPY webapp1 /var/www/html/
+~EXPOSE 80
+~ENTRYPOINT httpd -DFOREGROUND
+:wq
+# Building an image
+docker buils -t abhilasha:q4 .
+# creating a container
+docker run -d --name abhilashac4q4 -p 3434:80 abhilasha:q4 
+
+#Question 5
+#creating a volume 
+docker volumne create abhilashaq5
+#running a alpine container 
+docker run -itd --name abhilashac5q5  -v abhilashaq5:/adhocvol -v /etc/passwd:/user.txt sh  
+# Now we are in the terminal of the conatiner 
+wc -l /user.txt > /adhovol/userscount.txt 
+28
+
